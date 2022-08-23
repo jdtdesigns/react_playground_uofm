@@ -8,6 +8,8 @@ function App() {
   const [people, setPeople] = useState([]);
   const [image_url] = useState('https://api.lorem.space/image/movie?w=150&h=220');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [items, setItems] = useState([]);
+
 
   useEffect(() => {
     getStarwarsData()
@@ -31,6 +33,16 @@ function App() {
       })
   }
 
+  const addItem = () => {
+    const item = {
+      completed: false,
+      eagerness: 'high'
+    };
+
+    setItems([...items, item])
+  }
+
+
   return (
     <main>
       <Header isLoggedIn={isLoggedIn} title={title} />
@@ -48,9 +60,13 @@ function App() {
         )) : <p>Loading...</p>}
       </ul>
 
-      <button onClick={() => setTitle('title changed')}>Change Title</button>
+      <div className="column">
+        <button onClick={() => setTitle('title changed')}>Change Title</button>
 
-      <button onClick={getStarwarsData}>Get Starwars Data</button>
+        <button onClick={getStarwarsData}>Get Starwars Data</button>
+
+        <button onClick={addItem}>Add Item</button>
+      </div>
     </main>
   );
 }
