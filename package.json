@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm install && concurrently \"cd ./client && npm run build\" \"cd ./server && npm install\"",
+    "build:client": "cd ./client && npm run build",
+    "build:server": "cd ./server && npm install",
+    "build": "npm run build:client && npm run build:server",
     "start": "node server/server.js"
   },
   "repository": {
