@@ -1,0 +1,21 @@
+{
+  "name": "react_playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "concurrently \"cd ./client && npm run build\" \"cd ./server && npm install\"",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdtdesigns/react_playground_uofm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdtdesigns/react_playground_uofm/issues"
+  },
+  "homepage": "https://github.com/jdtdesigns/react_playground_uofm#readme"
+}
