@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
+import Image from './components/Image';
 
 function App() {
   const [title, setTitle] = useState('React Example');
   const [inputValue, setInputValue] = useState('');
   const [people, setPeople] = useState([]);
+  const [image_url] = useState('https://api.lorem.space/image/movie?w=150&h=220');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    getStarwarsData()
+  }, []);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -20,12 +27,15 @@ function App() {
       .then(res => res.json())
       .then(result => {
         setPeople(result.results);
+        setIsLoggedIn(true);
       })
   }
 
   return (
     <main>
-      <Header title={inputValue} />
+      <Header isLoggedIn={isLoggedIn} title={title} />
+
+      <Image image_url={image_url} title={title} />
 
       <form>
         <input onChange={handleInputChange} value={inputValue} type="text" placeholder="Input your name" />
@@ -35,8 +45,10 @@ function App() {
       <ul>
         {people.length ? people.map((person, i) => (
           <li key={i}>{person.name}</li>
-        )) : <p>No results yet.</p>}
+        )) : <p>Loading...</p>}
       </ul>
+
+      <button onClick={() => setTitle('title changed')}>Change Title</button>
 
       <button onClick={getStarwarsData}>Get Starwars Data</button>
     </main>
