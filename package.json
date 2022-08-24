@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/jdtdesigns/react_playground_uofm/issues"
   },
-  "homepage": "https://github.com/jdtdesigns/react_playground_uofm#readme"
+  "homepage": "https://github.com/jdtdesigns/react_playground_uofm#readme",
+  "dependencies": {
+    "apollo-server-express": "^3.10.1"
+  }
 }
