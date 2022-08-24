@@ -1,6 +1,27 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Image from './components/Image';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3333/graphql',
+  cache: new InMemoryCache()
+});
+
+const DATABASES_QUERY = gql`
+  query Databases {
+    getAll {
+      _id
+      database_name
+    }
+  }
+`;
 
 function App() {
   const [title, setTitle] = useState('React Example');
@@ -9,11 +30,12 @@ function App() {
   const [image_url] = useState('https://api.lorem.space/image/movie?w=150&h=220');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [items, setItems] = useState([]);
+  // const { loading, error, data } = useQuery(DATABASES_QUERY);
 
 
-  useEffect(() => {
-    getStarwarsData()
-  }, []);
+  // useEffect(() => {
+  //   getStarwarsData()
+  // }, []);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -44,30 +66,38 @@ function App() {
 
 
   return (
-    <main>
-      <Header isLoggedIn={isLoggedIn} title={title} />
+    <ApolloProvider client={client}>
+      <main>
+        <Header isLoggedIn={isLoggedIn} title={title} />
 
-      <Image image_url={image_url} title={title} />
+        <Image image_url={image_url} title={title} />
 
-      <form>
-        <input onChange={handleInputChange} value={inputValue} type="text" placeholder="Input your name" />
-        <button onClick={handleFormSubmit}>Submit</button>
-      </form>
+        {/* {error ? <p>{error}</p> : loading ? <p>Database query is loading...</p> : <ul>
+        {data.map(db => (
+          <li>{db.database_name}</li>
+        ))}
+      </ul>} */}
 
-      <ul>
-        {people.length ? people.map((person, i) => (
-          <li key={i}>{person.name}</li>
-        )) : <p>Loading...</p>}
-      </ul>
+        <form>
+          <input onChange={handleInputChange} value={inputValue} type="text" placeholder="Input your name" />
+          <button onClick={handleFormSubmit}>Submit</button>
+        </form>
 
-      <div className="column">
-        <button onClick={() => setTitle('title changed')}>Change Title</button>
+        <ul>
+          {people.length ? people.map((person, i) => (
+            <li key={i}>{person.name}</li>
+          )) : <p>Loading...</p>}
+        </ul>
 
-        <button onClick={getStarwarsData}>Get Starwars Data</button>
+        <div className="column">
+          <button onClick={() => setTitle('title changed')}>Change Title</button>
 
-        <button onClick={addItem}>Add Item</button>
-      </div>
-    </main>
+          <button onClick={getStarwarsData}>Get Starwars Data</button>
+
+          <button onClick={addItem}>Add Item</button>
+        </div>
+      </main>
+    </ApolloProvider>
   );
 }
 
