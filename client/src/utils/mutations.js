@@ -8,3 +8,11 @@ export const ADD_DATABASE = gql`
     }
   }
 `;
+
+export const ADD_USER = gql`
+  mutation addUser($email: String!, $password: String!) {
+    addUser(email: $email, password: $password) {
+      email
+    }
+  }
+`;

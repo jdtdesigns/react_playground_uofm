@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_DATABASE } from '../utils/mutations';
+import { ADD_USER } from '../utils/mutations';
 
 function UserForm() {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [addUser, { data }] = useMutation(ADD_USER);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    // let [addUser, {}]
+    addUser({ variables: formData });
   };
 
   const handleInputChange = (event) => {
@@ -25,6 +24,12 @@ function UserForm() {
 
   return (
     <form onSubmit={handleFormSubmit}>
+      {data && (
+        <div>
+          <h2>Submitted User Email: {data.addUser.email}</h2>
+        </div>
+      )}
+
       <input name="email" onChange={handleInputChange} value={formData.email} type="email" placeholder="Type your email" />
       <input name="password" onChange={handleInputChange} value={formData.password} type="password" placeholder="Type your password" />
       <button>Submit</button>
@@ -33,6 +38,12 @@ function UserForm() {
 }
 
 export default UserForm;
+
+
+
+
+
+
 
 
 
