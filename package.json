@@ -10,8 +10,8 @@
     "start": "node server/server.js",
     "server:dev": "npm run build:client && npm start",
     "dev:client": "cd ./client && npm start",
-    "dev: server": "cd ./server && nodemon server.js",
-    "dev": "npm run dev:client && npm run dev:server"
+    "dev:server": "cd ./server && nodemon server.js",
+    "dev": "npm run dev:client & npm run dev:server"
   },
   "repository": {
     "type": "git",

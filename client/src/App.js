@@ -2,17 +2,10 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Image from './components/Image';
 import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
   useQuery,
+  useMutation,
   gql
 } from '@apollo/client';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:3333/graphql',
-  cache: new InMemoryCache()
-});
 
 const DATABASES_QUERY = gql`
   query Databases {
@@ -23,26 +16,40 @@ const DATABASES_QUERY = gql`
   }
 `;
 
+const ADD_DATABASE = gql`
+  mutation addDatabase($database_name: String!) {
+    addDatabase(database_name: $database_name) {
+      _id
+      database_name
+    }
+  }
+`;
+
 function App() {
   const [title, setTitle] = useState('React Example');
-  const [inputValue, setInputValue] = useState('');
+  const [nameValue, setInputValue] = useState('');
   const [people, setPeople] = useState([]);
   const [image_url] = useState('https://api.lorem.space/image/movie?w=150&h=220');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [items, setItems] = useState([]);
-  // const { loading, error, data } = useQuery(DATABASES_QUERY);
+  const { loading, error, data } = useQuery(DATABASES_QUERY);
+  const [addDatabase, { loading: dbLoading, error: dbError, data: dbData }] = useMutation(ADD_DATABASE);
 
 
   // useEffect(() => {
   //   getStarwarsData()
   // }, []);
 
-  const handleFormSubmit = (event) => {
+  const handleAddDatabase = (event) => {
     event.preventDefault();
-    setTitle(inputValue);
+    addDatabase({
+      variables: {
+        database_name: nameValue
+      }
+    })
   };
 
-  const handleInputChange = (event) => {
+  const handleNameChange = (event) => {
     setInputValue(event.target.value);
   };
 
@@ -66,38 +73,45 @@ function App() {
 
 
   return (
-    <ApolloProvider client={client}>
-      <main>
-        <Header isLoggedIn={isLoggedIn} title={title} />
+    <main>
+      <Header isLoggedIn={isLoggedIn} title={title} />
 
-        <Image image_url={image_url} title={title} />
+      <Image image_url={image_url} title={title} />
 
-        {/* {error ? <p>{error}</p> : loading ? <p>Database query is loading...</p> : <ul>
-        {data.map(db => (
-          <li>{db.database_name}</li>
-        ))}
-      </ul>} */}
-
-        <form>
-          <input onChange={handleInputChange} value={inputValue} type="text" placeholder="Input your name" />
-          <button onClick={handleFormSubmit}>Submit</button>
-        </form>
-
+      {error ? <p>{error}</p> : loading ? <p>Database query is loading...</p> : (
         <ul>
-          {people.length ? people.map((person, i) => (
-            <li key={i}>{person.name}</li>
-          )) : <p>Loading...</p>}
+          {data.getAll.map(db => (
+            <li key={db._id}>{db.database_name}</li>
+          ))}
         </ul>
+      )}
 
-        <div className="column">
-          <button onClick={() => setTitle('title changed')}>Change Title</button>
+      <form>
+        <input onChange={handleNameChange} value={nameValue} type="text" placeholder="Type the database name" />
+        <button onClick={handleAddDatabase}>Submit</button>
+      </form>
 
-          <button onClick={getStarwarsData}>Get Starwars Data</button>
-
-          <button onClick={addItem}>Add Item</button>
+      {dbData && (
+        <div>
+          <p>ID: {dbData.addDatabase._id}</p>
+          <p>Database Name: {dbData.addDatabase.database_name}</p>
         </div>
-      </main>
-    </ApolloProvider>
+      )}
+
+      <ul>
+        {people.length ? people.map((person, i) => (
+          <li key={i}>{person.name}</li>
+        )) : <p>Loading...</p>}
+      </ul>
+
+      <div className="column">
+        <button onClick={() => setTitle('title changed')}>Change Title</button>
+
+        <button onClick={getStarwarsData}>Get Starwars Data</button>
+
+        <button onClick={addItem}>Add Item</button>
+      </div>
+    </main>
   );
 }
 
@@ -109,8 +123,12 @@ export default App;
 
 
 
+// const obj = {
+//   name: 'jd',
+//   age: 42
+// };
 
-
+// const {name: data_name, age: person_age, blah} = obj;
 
 
 
