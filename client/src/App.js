@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import BigButton from './components/BigButton';
 
 function App() {
   const [title, setTitle] = useState('Example Title');
@@ -8,6 +9,8 @@ function App() {
     <div>
       <h1>{title}</h1>
       {animals.map((animal, index) => <p key={index}>{animal}</p>)}
+
+      <BigButton />
     </div>
   );
 }
