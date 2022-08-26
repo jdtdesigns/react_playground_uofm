@@ -1,33 +1,21 @@
-const Database = require('../models/Database');
-const User = require('../models/User');
+const { User, Todo } = require('../models');
 
 const resolvers = {
   Query: {
-    hi() {
-      return 'Hi there!';
-    },
-    garf() {
-      return 'I hate Mondays and give me Lasagna!';
-    },
-    async getAll() {
-      return await Database.find();
-    },
-    async getOne(_, args) {
-      return await Database.findById(args.id);
+    async getTodos() {
+      return await Todo.find();
     }
   },
 
   Mutation: {
-    async addDatabase(_, args) {
-      return await Database.create({
-        database_name: args.database_name
-      });
-    },
-    async addUser(_, { email, password }) {
+    async addUser(_, { email, password }, context) {
       return await User.create({
         email,
         password
       });
+    },
+    async addTodo(_, args) {
+      return await Todo.create(args);
     }
   }
 };

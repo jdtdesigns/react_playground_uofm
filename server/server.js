@@ -1,10 +1,8 @@
 const express = require('express');
 const path = require('path');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const db = require('./config/connection');
-// const Database = require('./models/Database');
-const typeDefs = require('./schemas/typeDefs');
-const resolvers = require('./schemas/resolvers');
+const { typeDefs, resolvers } = require('./schemas');
 const PORT = process.env.PORT || 3333;
 
 const app = express();
@@ -14,7 +12,10 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 async function startServer(typeDefs, resolvers) {
   const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: {
+      hey: 'hey there'
+    }
   });
 
   await server.start();

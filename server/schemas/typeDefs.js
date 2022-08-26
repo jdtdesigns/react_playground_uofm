@@ -1,27 +1,23 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type Database {
-    _id: ID
-    database_name: String
-  }
-
   type User {
     _id: ID!
     email: String!
-    password: String!
+  }
+
+  type Todo {
+    _id: String!
+    todo_text: String!
   }
 
   type Query {
-    hi: String
-    garf: String
-    getAll: [Database]
-    getOne(id: ID): Database
+    getTodos: [Todo]
   }
 
   type Mutation {
-    addDatabase(database_name: String!): Database
     addUser(email: String!, password: String!): User
+    addTodo(todo_text: String!): Todo
   }
 `;
 
