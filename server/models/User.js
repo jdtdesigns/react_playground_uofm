@@ -7,12 +7,6 @@ const userSchema = new Schema({
     required: [true, 'You must supply an email address'],
     unique: true,
     match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i
-    // validate: {
-    //   validator: function (v) {
-    //     return /\d{3}-\d{3}-\d{4}/.test(v);
-    //   },
-    //   message: props => `${props.value} is not a valid phone number!`
-    // },
   },
   password: {
     type: String,
@@ -22,13 +16,11 @@ const userSchema = new Schema({
     type: SchemaTypes.ObjectId,
     ref: 'Todo'
   }]
-}, {
-  hooks: {
-    async beforeCreate(user) {
-      const hashed_pass = await bcrypt.hash(user.password, 10);
-      user.password = hashed_pass;
-    }
-  }
+});
+
+userSchema.pre('save', async function () {
+  const hashed_pass = await bcrypt.hash(this.password, 10);
+  this.password = hashed_pass;
 });
 
 userSchema.methods.validatePass = async function (unencryted_password) {
