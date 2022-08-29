@@ -1,6 +1,6 @@
-function BigButton() {
+function BigButton(props) {
   return (
-    <button>Big Button</button>
+    <button>{props.title}</button>
   )
 }
 
