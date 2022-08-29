@@ -1,7 +1,7 @@
 function Landing() {
   return (
     <div>
-      <h1>Landing Page</h1>
+      <h1>Welcome Guest!</h1>
     </div>
   )
 }

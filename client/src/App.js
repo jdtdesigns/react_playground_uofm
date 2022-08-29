@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import StarWars from './pages/StarWars';
 import Landing from './pages/Landing';
+import Header from './components/Header';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -8,11 +9,12 @@ function App() {
 
   return (
     <div>
+      <Header logo={logo} />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/starwars" element={<StarWars />} />
       </Routes>
-
     </div>
   );
 }
