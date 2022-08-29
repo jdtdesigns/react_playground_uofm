@@ -1,6 +1,6 @@
 function BigButton(props) {
   return (
-    <button>{props.title}</button>
+    <button onClick={props.grabData}>{props.title}</button>
   )
 }
 
