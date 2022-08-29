@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import BigButton from './components/BigButton';
+import StarWars from './pages/StarWars';
 
 function App() {
   const [title, setTitle] = useState('Example Title');
@@ -25,9 +26,12 @@ function App() {
 
       {showButton ? <BigButton grabData={grabData} title={title} /> : ''}
       <h3>Starwars Data</h3>
-      {swData.map((char, index) => {
+      {/* {swData.map((char, index) => {
         return <p key={index}>{char.name}</p>
-      })}
+      })} */}
+
+      <StarWars />
+
     </div>
   );
 }
