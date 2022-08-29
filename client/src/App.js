@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import StarWars from './pages/StarWars';
 import Landing from './pages/Landing';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   const [logo, setTitle] = useState('React Overview');
-  const [animals, setAnimals] = useState(['dog', 'cat', 'elephant']);
   const [swData, setSWData] = useState([]);
-
 
   const grabData = () => {
     fetch('https://swapi.dev/api/people')
@@ -20,16 +19,15 @@ function App() {
 
   return (
     <div>
-      {animals.map((animal, index) => <p key={index}>{animal}</p>)}
-
       <h3>Starwars Data</h3>
-      {/* {swData.map((char, index) => {
+      {swData.map((char, index) => {
         return <p key={index}>{char.name}</p>
-      })} */}
+      })}
 
-
-      <StarWars />
-      <Landing />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/starwars" element={<StarWars />} />
+      </Routes>
 
     </div>
   );

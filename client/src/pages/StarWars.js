@@ -1,7 +1,7 @@
 function StarWars() {
   return (
     <div>
-      <p>StarWars Page</p>
+      <h1>StarWars Page</h1>
     </div>
   )
 }
