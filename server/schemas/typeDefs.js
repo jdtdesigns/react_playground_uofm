@@ -11,12 +11,17 @@ const typeDefs = gql`
     todo_text: String!
   }
 
+  type Auth {
+    user: User
+    token: ID
+  }
+
   type Query {
     getTodos: [Todo]
   }
 
   type Mutation {
-    addUser(email: String!, password: String!): User
+    addUser(email: String!, password: String!): Auth
     addTodo(todo_text: String!): Todo
   }
 `;

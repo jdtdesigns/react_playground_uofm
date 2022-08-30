@@ -1,28 +1,23 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { GET_TODOS } from '../utils/queries';
 
-const GET_TODOS = gql`
-  query GetTodos {
-    getTodos {
-      _id
-      todo_text
-    }
-  }  
-`;
 
 function TodosDisplay() {
   const { error, loading, data } = useQuery(GET_TODOS);
 
   return (
-    <div>
+    <div className="todos">
       {error && <p className="error">{error.message}</p>}
 
       {loading && <p>Loading...</p>}
 
-      {data && data.getTodos.map(todo => (
-        <div key={todo._id}>
-          <h3>{todo.todo_text}</h3>
-        </div>
-      ))}
+      {data && (
+        <ul>
+          {data.getTodos.map(todo => (
+            <li key={todo._id}>{todo.todo_text}</li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
