@@ -34,4 +34,9 @@ header * {
 header nav a {
   margin-left: 10px;
   font-size: 1rem;
+  text-decoration: none;
+}
+
+header nav a.active {
+  text-decoration: underline;
 }

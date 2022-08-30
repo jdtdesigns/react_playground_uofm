@@ -7,6 +7,7 @@ function Header(props) {
       <nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/starwars">StarWars!</NavLink>
+        <NavLink to="/todos">Todos</NavLink>
       </nav>
     </header>
   )
