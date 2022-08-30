@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useStore } from '../store';
 
 function StarWars() {
   const [swData, setSWData] = useState([]);
+  const { state: { user } } = useStore();
 
   const grabData = () => {
     fetch('https://swapi.dev/api/people')
@@ -16,6 +18,9 @@ function StarWars() {
   return (
     <div>
       <h3>Starwars Data</h3>
+
+      <p>{user.username}</p>
+
       {swData.map((char, index) => {
         return <p key={index}>{char.name}</p>
       })}
