@@ -44,3 +44,28 @@ header nav a.active {
 .todos {
   padding: 0 3% 25px;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+}
+
+form > * {
+  margin-bottom: 5px;
+  padding: 6px;
+}
+
+form h1 {
+  text-align: center;
+}
+
+form .type-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+form .type-wrap label:not(:last-child) {
+  margin-right: 8px;
+}

@@ -11,6 +11,8 @@ function TodosDisplay() {
 
       {loading && <p>Loading...</p>}
 
+      {data && !data.getTodos.length && <p>No todos have been added.</p>}
+
       {data && (
         <ul>
           {data.getTodos.map(todo => (
