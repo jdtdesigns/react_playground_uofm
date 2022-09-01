@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 
-function TodoForm(props) {
+function AuthForm(props) {
   const [formInput, setFormInput] = useState({
     email: '',
     password: '',
@@ -73,4 +73,4 @@ function TodoForm(props) {
   )
 }
 
-export default TodoForm;
+export default AuthForm;
